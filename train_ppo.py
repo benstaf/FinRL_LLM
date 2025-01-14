@@ -43,8 +43,9 @@
 
 ###################
 
-
+from datasets import load_dataset
 import pandas as pd
+
 #from finrl.agents.stablebaselines3.models import DRLAgent
 from finrl.config import INDICATORS, TRAINED_MODEL_DIR, RESULTS_DIR
 from finrl.main import check_and_make_directories
@@ -109,8 +110,14 @@ from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_sc
 
 #train = pd.read_csv('train_data.csv')
 
-train = pd.read_csv('train_data2.csv')
+#train = pd.read_csv('train_data2.csv')
 
+
+# Load the dataset from Hugging Face
+dataset = load_dataset("benstaf/nasdaq_2013_2023", data_files="train_data_2013_2018.csv")
+
+# Convert to pandas DataFrame
+train = pd.DataFrame(dataset['train'])
 
 # If you are not using the data generated from part 1 of this tutorial, make sure 
 # it has the columns and index in the form that could be make into the environment. 
