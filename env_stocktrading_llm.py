@@ -99,7 +99,7 @@ class StockTradingEnv(gym.Env):
         self.date_memory = [self._get_date()]
         #         self.logger = Logger('results',[CSVOutputFormat])
         # self.reset()
-        self._seed()
+        self.seed()
 
     def _sell_stock(self, index, action):
         def _do_sell_normal():
@@ -576,7 +576,7 @@ class StockTradingEnv(gym.Env):
             df_actions = pd.DataFrame({"date": date_list, "actions": action_list})
         return df_actions
 
-    def _seed(self, seed=None):
+    def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
 
