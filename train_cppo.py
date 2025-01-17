@@ -530,7 +530,7 @@ def cppo(env_fn,
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--env', type=str, default=env_train) #'HalfCheetah-v2')
-parser.add_argument('--hid', type=int, default=64)
+parser.add_argument('--hid', type=int, default=512)
 parser.add_argument('--l', type=int, default=2)
 parser.add_argument('--seed', '-s', type=int, default=0)
 parser.add_argument('--cpu', type=int, default=4)
