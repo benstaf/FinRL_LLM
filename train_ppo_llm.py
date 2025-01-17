@@ -43,7 +43,7 @@
 
 ###################
 
-
+from datasets import load_dataset
 import pandas as pd
 #from finrl.agents.stablebaselines3.models import DRLAgent
 from finrl.config import INDICATORS, TRAINED_MODEL_DIR, RESULTS_DIR
@@ -110,9 +110,12 @@ from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_sc
 #train = pd.read_csv('train_data.csv')
 
 #train = pd.read_csv('train_data2.csv')
+dataset = load_dataset("benstaf/train_data_qwen_sentiment", data_files="train_data_qwen_sentiment.csv")
 
+# Convert to pandas DataFrame
+train = pd.DataFrame(dataset['train'])
 
-train = pd.read_csv('train_data_qwen_sentiment.csv')
+#train = pd.read_csv('train_data_qwen_sentiment.csv')
 
 train = train.drop('Unnamed: 0',axis=1)
 
