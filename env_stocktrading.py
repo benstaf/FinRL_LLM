@@ -488,7 +488,7 @@ class StockTradingEnv(gym.Env):
             date = self.data.date
         return date
 
-    # add save_state_memory to preserve state in the trading process
+   # add save_state_memory to preserve state in the trading process
     def save_state_memory(self):
         if len(self.df.tic.unique()) > 1:
             # date and close price length must match actions length
@@ -510,4 +510,47 @@ class StockTradingEnv(gym.Env):
                 ],
             )
             df_states.index = df_date.date
-            # df_actions = pd.DataFrame({'date':date
+            # df_actions = pd.DataFrame({'date':date_list,'actions':action_list})
+        else:
+            date_list = self.date_memory[:-1]
+            state_list = self.state_memory
+            df_states = pd.DataFrame({"date": date_list, "states": state_list})
+        # print(df_states)
+        return df_states
+
+    def save_asset_memory(self):
+        date_list = self.date_memory
+        asset_list = self.asset_memory
+        # print(len(date_list))
+        # print(len(asset_list))
+        df_account_value = pd.DataFrame(
+            {"date": date_list, "account_value": asset_list}
+        )
+        return df_account_value
+
+    def save_action_memory(self):
+        if len(self.df.tic.unique()) > 1:
+            # date and close price length must match actions length
+            date_list = self.date_memory[:-1]
+            df_date = pd.DataFrame(date_list)
+            df_date.columns = ["date"]
+
+            action_list = self.actions_memory
+            df_actions = pd.DataFrame(action_list)
+            df_actions.columns = self.data.tic.values
+            df_actions.index = df_date.date
+            # df_actions = pd.DataFrame({'date':date_list,'actions':action_list})
+        else:
+            date_list = self.date_memory[:-1]
+            action_list = self.actions_memory
+            df_actions = pd.DataFrame({"date": date_list, "actions": action_list})
+        return df_actions
+
+    def seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return [seed]
+
+    def get_sb_env(self):
+        e = DummyVecEnv([lambda: self])
+        obs = e.reset()
+        return e, obs
