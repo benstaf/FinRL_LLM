@@ -440,6 +440,13 @@ def cppo(env_fn,
             ep_ret += r
             ep_len += 1
 
+            #extract individual weights of each stock in the portfolio 
+            prices = np.array(env.state[1:stock_dim+1])
+            shares = np.array(env.state[stock_dim+1:stock_dim*2+1])
+    
+            # Calculate position values
+            stock_values = prices * shares
+             
             # the num of trajectories
             trajectory_num += 1
             nu_delta += ep_ret + v - r
