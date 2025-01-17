@@ -323,9 +323,9 @@ class StockTradingEnv(gym.Env):
             strong_buy_mask = (llm_sentiments == 5)
 
             # Adjust actions based on combined conditions
-            actions[(strong_sell_mask & buy_mask) | (strong_buy_mask & sell_mask)] *= 0.5  # Reduce mismatched strong actions
-            actions[(moderate_sell_mask & buy_mask) | (moderate_buy_mask & sell_mask)] *= 0.7  # Reduce mismatched moderate actions
-            actions[hold_mask] *= 0.8  # Reduce all actions for neutral sentiment
+            actions[(strong_sell_mask & buy_mask) | (strong_buy_mask & sell_mask)] *= 0.9  # Reduce mismatched strong actions
+            actions[(moderate_sell_mask & buy_mask) | (moderate_buy_mask & sell_mask)] *= 0.95  # Reduce mismatched moderate actions
+            actions[hold_mask] *= 0.98  # Reduce all actions for neutral sentiment
 
  #           print("actions after: " + str(actions))
 
