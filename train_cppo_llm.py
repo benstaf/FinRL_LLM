@@ -459,15 +459,15 @@ def cppo(env_fn,
             stock_weights = stock_values / total_value
             llm_risk_factor= np.dot(stock_weights,llm_risks_weights)
 
-            adjusted_cvar = llm_risk_factor*(ep_ret + v - r) #that's where llm risk scores are taken into account 
+            adjusted_D_pi = llm_risk_factor*(ep_ret + v - r) #that's where llm risk scores are taken into account 
             # the num of trajectories
             trajectory_num += 1
-            nu_delta += adjusted_cvar
+            nu_delta += adjusted_D_pi
             updates = np.float32(0.0)
-            if adjusted_cvar < nu:
+            if adjusted_D_pi < nu:
                 bad_trajectory_num += 1
-                lam_delta += adjusted_cvar
-                updates = delay * cvarlam / (1 - alpha) * (nu - adjusted_cvar)
+                lam_delta += adjusted_D_pi
+                updates = delay * cvarlam / (1 - alpha) * (nu - adjusted_D_pi)
                 if updates > abs(v) * cvar_clip_ratio:
                     # print("update: ", updates)
                     updates = abs(v) * cvar_clip_ratio
