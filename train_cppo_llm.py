@@ -440,7 +440,13 @@ def cppo(env_fn,
             ep_ret += r
             ep_len += 1
 
-            llm_risks_weights =
+            
+            # Define the mapping of LLM risk scores to weights
+            risk_to_weight = {1: 0.9, 2: 0.95, 3: 1.0, 4: 1.05, 5: 1.1}
+
+            # Apply the mapping to generate llm_risks_weights
+            llm_risks_weights = np.vectorize(risk_to_weight.get)(llm_risks)
+
             #extract individual weights of each stock in the portfolio 
             prices = np.array(env.state[1:stock_dim+1])
             shares = np.array(env.state[stock_dim+1:stock_dim*2+1])
