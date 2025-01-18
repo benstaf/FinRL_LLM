@@ -436,16 +436,22 @@ def cppo(env_fn,
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32))
 
-            next_o, r, d, _ = env.step(a)
+            llm_risks, next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
 
+            llm_risks_weights =
             #extract individual weights of each stock in the portfolio 
             prices = np.array(env.state[1:stock_dim+1])
             shares = np.array(env.state[stock_dim+1:stock_dim*2+1])
     
             # Calculate position values
             stock_values = prices * shares
+            total_value = np.sum(stock_values)
+
+            # Renormalize the stock values so that their sum is 1
+            stock_weights = stock_values / total_value
+            llm_risk_factor= np.dot(stock_weights,llm_risks_weights)
              
             # the num of trajectories
             trajectory_num += 1
