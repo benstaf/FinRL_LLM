@@ -444,6 +444,7 @@ class StockTradingEnv(gym.Env):
                 state = ([self.initial_amount]+ self.data.close.values.tolist()+ self.num_stock_shares+ sum(
                         (self.data[tech].values.tolist() for tech in self.tech_indicator_list),[],)
                     +  self.data[self.llm_sentiment_col].values.tolist()  #add llm sentiment
+                    +  self.data[self.llm_risk_col].values.tolist()  #add llm sentiment
                 )  # append initial stocks_share to initial state, instead of all zero
             else:
                 # for single stock
@@ -453,6 +454,7 @@ class StockTradingEnv(gym.Env):
                     + [0] * self.stock_dim
                     + sum(([self.data[tech]] for tech in self.tech_indicator_list), [])
                     + [self.data[self.llm_sentiment_col]]
+                    + [self.data[self.llm_risk_col]]
                 )
         else:
             # Using Previous State
@@ -500,6 +502,7 @@ class StockTradingEnv(gym.Env):
                     [],
                 )
                 + self.data[self.llm_sentiment_col].values.tolist() # add LLM sentiment
+                + self.data[self.llm_risk_col].values.tolist() # add LLM risk
             )
 
         else:
@@ -510,6 +513,8 @@ class StockTradingEnv(gym.Env):
                 + list(self.state[(self.stock_dim + 1) : (self.stock_dim * 2 + 1)])
                 + sum(([self.data[tech]] for tech in self.tech_indicator_list), [])
                 + [self.data[self.llm_sentiment_col]] #add LLM sentiment
+                + [self.data[self.llm_risk_col]] #add LLM risk
+
             )
 
         return state
