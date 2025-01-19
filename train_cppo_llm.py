@@ -32,17 +32,42 @@ from spinup.utils.logx import EpochLogger
 from spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params, mpi_avg_grads
 from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
 
-#train = pd.read_csv('train_data.csv')
 
-train = pd.read_csv('train_data2.csv')
+# from Huggging Face :
+#dataset = load_dataset("benstaf/train_data_qwen_sentiment", data_files="train_data_qwen_sentiment.csv")
 
-# Then you can comment and skip the following two lines.
-train = train.set_index(train.columns[0])
-train.index.names = ['']
+# Convert to pandas DataFrame
+#train = pd.DataFrame(dataset['train'])
+
+train = pd.read_csv('train_data_qwen_risk.csv')
+
+train = train.drop('Unnamed: 0',axis=1)
+
+# Create a new index based on unique dates
+unique_dates = train['date'].unique()
+date_to_idx = {date: idx for idx, date in enumerate(unique_dates)}
+
+# Create new index based on the date mapping
+train['new_idx'] = train['date'].map(date_to_idx)
+
+# Set this as the index
+train = train.set_index('new_idx')
+
+
+#missing values with 0
+train['llm_sentiment'].fillna(0, inplace=True) #0 is outside scope of sentiment scores (min is 1)
+
+train['llm_risk'].fillna(3, inplace=True) #neutral risk score is 3
+
+
+
+#### end data loading and preparation
+
+
 
 
 stock_dimension = len(train.tic.unique())
-state_space = 1 + 2*stock_dimension + len(INDICATORS)*stock_dimension
+state_space = 1 + 2*stock_dimension + (2+len(INDICATORS))*stock_dimension  #add dimensions for LLM sentiment and risk
 print(f"Stock Dimension: {stock_dimension}, State Space: {state_space}")
 
 
