@@ -312,7 +312,7 @@ class StockTradingEnv(gym.Env):
 #            print("actions before: " + str(actions))
             # Fetch LLM sentiments for the current day
             llm_sentiments = self.data[self.llm_sentiment_col].values  # values: [1, 2, 3, 4, 5]
-           # llm_risks = self.data[self.llm_risk_col].values  # values: [1, 2, 3, 4, 5]
+#            llm_risks = self.data[self.llm_risk_col].values  # values: [1, 2, 3, 4, 5]
 
             # Create masks for action types
             buy_mask = (actions > 0)
