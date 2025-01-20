@@ -289,7 +289,7 @@ class CPPOBuffer:
 
 def cppo(env_fn,
          actor_critic=core.MLPActorCritic,
-         ac_kwargs=dict(hidden_sizes=[256, 128], activation=torch.nn.ReLU),
+         ac_kwargs=dict(hidden_sizes=[512, 512], activation=torch.nn.ReLU),
          seed=42,
          steps_per_epoch=20000,  # Larger batch size to handle market variability
          epochs=25,  # More epochs for better convergence
