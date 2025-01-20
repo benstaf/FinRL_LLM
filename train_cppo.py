@@ -6,7 +6,7 @@ import pandas as pd
 #from finrl.agents.stablebaselines3.models import DRLAgent
 from finrl.config import INDICATORS, TRAINED_MODEL_DIR, RESULTS_DIR
 from finrl.main import check_and_make_directories
-from finrl.meta.env_stock_trading.env_stocktrading import StockTradingEnv
+from env_stocktrading import StockTradingEnv
 
 check_and_make_directories([TRAINED_MODEL_DIR])
 
