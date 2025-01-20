@@ -309,7 +309,7 @@ def cppo(env_fn,
          nu_lr=5e-4,  # Learning rate for Lagrange multiplier (slightly slower)
          lam_lr=5e-4,  # Learning rate for CVaR Lagrange multiplier
          nu_start=0.1,  # Starting value for nu
-         lam_start=0.5,  # Starting value for lambda
+         lam_start=0.05,  # Starting value for lambda
          nu_delay=0.75,  # Delayed nu updates for better stability
          lam_low_bound=0.001,  # Lower bound for lambda
          delay=1.0,  # Update delay for constraints
