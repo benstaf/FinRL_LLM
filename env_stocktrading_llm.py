@@ -327,6 +327,8 @@ class StockTradingEnv(gym.Env):
             actions[(moderate_sell_mask & buy_mask) | (moderate_buy_mask & sell_mask)] *= 0.95  # Reduce mismatched moderate actions
             actions[hold_mask] *= 0.98  # Reduce all actions for neutral sentiment
 
+            actions[(strong_sell_mask & sell_mask) | (strong_buy_mask & buy_mask)] *= 1.1  # Amplify matched strong actions
+            actions[(moderate_sell_mask & sell_mask) | (moderate_buy_mask & buy_mask)] *= 1.05  # Amplify matched moderate actions
  #           print("actions after: " + str(actions))
 
             actions = actions * self.hmax  # actions initially is scaled between 0 to 1
