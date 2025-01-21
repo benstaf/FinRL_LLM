@@ -333,7 +333,7 @@ def cppo(env_fn,
          nu_lr=5e-4,  # Learning rate for Lagrange multiplier (slightly slower)
          lam_lr=5e-4,  # Learning rate for CVaR Lagrange multiplier
          nu_start=0.1,  # Starting value for nu
-         lam_start=0.5,  # Starting value for lambda
+         lam_start=0.05,  # Starting value for lambda
          nu_delay=0.75,  # Delayed nu updates for better stability
          lam_low_bound=0.001,  # Lower bound for lambda
          delay=1.0,  # Update delay for constraints
@@ -475,7 +475,7 @@ def cppo(env_fn,
     #        print("llm risks scores are  : " + str(llm_risks))
              
             # Define the mapping of LLM risk scores to weights
-            risk_to_weight = {1: 0.9, 2: 0.95, 3: 1.0, 4: 1.05, 5: 1.1}
+            risk_to_weight = {1: 0.95, 2: 0.975, 3: 1.0, 4: 1.025, 5: 1.05}
 
             # Apply the mapping to generate llm_risks_weights
             llm_risks_weights = np.vectorize(risk_to_weight.get)(llm_risks)
