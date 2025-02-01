@@ -707,7 +707,7 @@ parser.add_argument('--env', type=str, default=env_train) #'HalfCheetah-v2')
 
 # Parser arguments adapted to hyperparameter optimization by chatGPT
 
-parser.add_argument('--hid', type=int, default=256)  # Updated to match the first hidden size in ac_kwargs
+parser.add_argument('--hid', type=int, default=512)  # Updated to match the first hidden size in ac_kwargs
 parser.add_argument('--l', type=int, default=2)  # Updated to match the number of layers in ac_kwargs
 parser.add_argument('--gamma', type=float, default=0.995)  # Updated to match gamma in ppo
 parser.add_argument('--seed', '-s', type=int, default=42)  # Updated to match seed in ppo
