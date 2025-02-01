@@ -2,6 +2,8 @@
 # coding: utf-8
 #run with the command: OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 mpirun -np 4 python3 train_cppo.py
 
+from datasets import load_dataset
+
 import pandas as pd
 #from finrl.agents.stablebaselines3.models import DRLAgent
 from finrl.config import INDICATORS, TRAINED_MODEL_DIR, RESULTS_DIR
@@ -39,7 +41,13 @@ from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_sc
 
 #train = pd.read_csv('train_data.csv')
 
-train = pd.read_csv('train_data2.csv')
+#train = pd.read_csv('train_data2.csv')
+
+# Load the dataset from Hugging Face
+dataset = load_dataset("benstaf/nasdaq_2013_2023", data_files="train_data_2013_2018.csv")
+
+# Convert to pandas DataFrame
+train = pd.DataFrame(dataset['train'])
 
 # Then you can comment and skip the following two lines.
 train = train.set_index(train.columns[0])
